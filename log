@@ -1,0 +1,12 @@
+# Creating Directories 
+mkdir dir logos
+cd logos
+mkdir server
+cd server
+
+# Initializing the project
+npm init
+mkdir src
+touch src/server.js
+npm install express
+npm run start
