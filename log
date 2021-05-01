@@ -10,3 +10,11 @@ mkdir src
 touch src/server.js
 npm install express
 npm run start
+
+# Enable TypeScript
+npm install --save-dev typescript
+sudo apt install node-typescript
+tsc --init
+mv src/server.js src/server.ts
+npm i --save-dev @types/express
+npm run start
