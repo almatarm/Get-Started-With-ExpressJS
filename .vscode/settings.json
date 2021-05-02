@@ -1,0 +1,7 @@
+{
+    "workbench.settings.editor": "json",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "editor.formatOnSave": true
+}
