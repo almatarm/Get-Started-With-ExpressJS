@@ -23,3 +23,17 @@ npm run start
 eslint --init
 npm install --save-dev prettier eslint-config-prettier eslint-plugin-prettier
 npx prettier-init
+
+# 04
+cd src
+# create .env with env variable
+touch .env
+npm install dotenv
+# env validation and default values
+mkdir utils
+touch utils/validate.env.ts
+npm install envalid
+# server class
+mkdir config
+touch config/server.config.ts
+
