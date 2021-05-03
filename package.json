@@ -2,13 +2,19 @@
   "name": "logos_server",
   "version": "0.0.2",
   "description": "Express.js Logos Server",
-  "main": "dist/server.js",
+  "main": "src/server.ts",
   "scripts": {
-    "prebuild": "eslint src/**/*.ts --fix", 
+    "prebuild": "eslint src/**/*.ts --fix",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node .",
+    "start": "ts-node .",
+    "dev": "nodemon --require ./src/server.ts",
     "lint": "eslint src/**/*.ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "keywords": [],
   "author": "",
@@ -25,7 +31,10 @@
     "eslint": "^7.25.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^6.0.0",
+    "nodemon": "^2.0.7",
     "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
   }
 }

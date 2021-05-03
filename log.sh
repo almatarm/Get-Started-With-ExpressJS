@@ -33,7 +33,11 @@ npm install dotenv
 mkdir utils
 touch utils/validate.env.ts
 npm install envalid
-# server class
+# server class and config
 mkdir config
 touch config/server.config.ts
 
+# 05
+npm install --save-dev ts-node nodemon 
+touch nodemon.json
+npm install --save-dev husky 
