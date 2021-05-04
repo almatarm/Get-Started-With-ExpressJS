@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import errorMiddleware from "./middleware/error.middleware";
 
 import ServerConfig from "./config/server.config";
 import validateEnv from "./utils/validate.env";
@@ -31,6 +32,7 @@ class Server {
       })
     );
     this.app.use(cookieParser());
+    this.app.use(errorMiddleware);
   }
 
   setupRoutes() {

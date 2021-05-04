@@ -56,3 +56,12 @@ npm i --save-dev @types/cors
 ## HTTP request logger middleware for node.js
 npm install morgan
 npm i --save-dev @types/morgan
+## Parse Cookie header and populate req.cookies with an object 
+## keyed by the cookie names. 
+npm install cookie-parser
+npm i --save-dev @types/cookie-parser
+
+# 07 Error Handling
+mkdir src/middleware
+touch src/middleware/error.middleware
+mkdir src/exceptions
