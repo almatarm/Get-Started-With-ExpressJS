@@ -46,3 +46,13 @@ npm install --save-dev husky
 touch .editorconfig
 ## Set up ESlint, Prettier & EditorConfig without conflicts
 ## https://blog.theodo.com/2019/08/empower-your-dev-environment-with-eslint-prettier-and-editorconfig-with-no-conflicts/
+
+
+# 06 Middlewares
+## The CORS mechanism supports secure cross-origin requests 
+## and data transfers between browsers and servers. 
+npm install cors
+npm i --save-dev @types/cors
+## HTTP request logger middleware for node.js
+npm install morgan
+npm i --save-dev @types/morgan

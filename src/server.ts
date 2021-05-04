@@ -1,5 +1,9 @@
 import express from "express";
 
+import cors from "cors";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
+
 import ServerConfig from "./config/server.config";
 import validateEnv from "./utils/validate.env";
 
@@ -13,7 +17,20 @@ class Server {
     this.port = port;
     this.path = path;
 
+    this.setupMiddlewares();
     this.setupRoutes();
+  }
+
+  setupMiddlewares() {
+    this.app.use(cors());
+    this.app.use(morgan("dev"));
+    this.app.use(express.json());
+    this.app.use(
+      express.urlencoded({
+        extended: false
+      })
+    );
+    this.app.use(cookieParser());
   }
 
   setupRoutes() {
