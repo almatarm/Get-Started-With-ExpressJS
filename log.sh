@@ -41,3 +41,8 @@ touch config/server.config.ts
 npm install --save-dev ts-node nodemon 
 touch nodemon.json
 npm install --save-dev husky 
+
+# 05 Editor Config
+touch .editorconfig
+## Set up ESlint, Prettier & EditorConfig without conflicts
+## https://blog.theodo.com/2019/08/empower-your-dev-environment-with-eslint-prettier-and-editorconfig-with-no-conflicts/
