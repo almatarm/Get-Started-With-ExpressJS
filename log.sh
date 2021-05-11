@@ -65,3 +65,13 @@ npm i --save-dev @types/cookie-parser
 mkdir src/middleware
 touch src/middleware/error.middleware
 mkdir src/exceptions
+
+# 08 User Authentication
+npm install class-validator
+npm install mongoose
+npm install bcrypt
+npm install --save-dev @types/bcrypt
+npm install jsonwebtoken
+npm install --save-dev @types/jsonwebtoken
+npm install class-transformer
+npm install typescript-logging

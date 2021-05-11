@@ -4,10 +4,16 @@ import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import errorMiddleware from "./middleware/error.middleware";
+import { log } from './utils/logger';
 
 import ServerConfig from "./config/server.config";
+import MongodbConfig from './config/mongdb.config';
 import validateEnv from "./utils/validate.env";
 
+import mongoose from "mongoose";
+
+import AuthRouter from './auth/auth.router';
+import AuthConfig from "./config/auth.config";
 class Server {
   app: express.Application;
   path: string;
@@ -19,7 +25,9 @@ class Server {
     this.path = path;
 
     this.setupMiddlewares();
+    this.connectToMongodb();
     this.setupRoutes();
+    this.setupErrorHandling();
   }
 
   setupMiddlewares() {
@@ -31,14 +39,62 @@ class Server {
         extended: false
       })
     );
-    this.app.use(cookieParser());
-    this.app.use(errorMiddleware);
+    this.app.use(cookieParser(AuthConfig.cookiesSignKey));
+  }
+
+  private connectToMongodb() {
+    const MONGODB_URI = 'mongodb://' + MongodbConfig.host +
+      ':' + MongodbConfig.port + '/' + MongodbConfig.db;
+    const connection = mongoose.connection;
+
+    connection.on('connected', () => {
+      log.info('Mongo Connection Established');
+    });
+
+    connection.on('reconnected', () => {
+      log.info('Mongo Connection Reestablished');
+    });
+
+    connection.on('disconnected', () => {
+      log.info('Mongo Connection Disconnected');
+      log.info('Trying to reconnect to Mongo ...');
+      setTimeout(() => {
+        mongoose.connect(MONGODB_URI, {
+          keepAlive: true,
+          socketTimeoutMS: 3000,
+          connectTimeoutMS: 3000,
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        });
+      }, 3000);
+    });
+
+    connection.on('close', () => {
+      log.info('Mongo Connection Closed');
+    });
+
+    connection.on('error', (error: Error) => {
+      log.error('Mongo Connection ERROR: ', error);
+    });
+
+    const run = async () => {
+      await mongoose.connect(MONGODB_URI, {
+        keepAlive: true,
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+    };
+
+    run().catch(error => log.error('Mongo Connection ERROR: ', error));
   }
 
   setupRoutes() {
-    this.app.get("/", (req, res) => {
-      res.send("Hello, world!");
-    });
+    console.log(this.path)
+    this.app.use(this.path, (new AuthRouter()).router);
+  }
+
+  private setupErrorHandling() {
+    this.app.use(errorMiddleware);
   }
 
   start() {
@@ -49,6 +105,5 @@ class Server {
 }
 
 validateEnv();
-console.log(ServerConfig.port);
 const server = new Server(ServerConfig.path, ServerConfig.port);
 server.start();
